@@ -3,7 +3,7 @@ using Telegram.Bot.Exceptions;
 using Telegram.Bot.Polling;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
-using Telegram.Bot.Types.InlineQueryResults;
+// using Telegram.Bot.Types.InlineQueryResults;
 
 namespace Telegram.Bot.Template.Services;
 
@@ -24,9 +24,9 @@ public class UpdateHandler : IUpdateHandler
         {
             { Message: { } message }                       => BotOnMessageReceived(message, cancellationToken),
             { EditedMessage: { } message }                 => BotOnMessageReceived(message, cancellationToken),
-            { CallbackQuery: { } callbackQuery }           => BotOnCallbackQueryReceived(callbackQuery, cancellationToken),
-            { InlineQuery: { } inlineQuery }               => BotOnInlineQueryReceived(inlineQuery, cancellationToken),
-            { ChosenInlineResult: { } chosenInlineResult } => BotOnChosenInlineResultReceived(chosenInlineResult, cancellationToken),
+            // { CallbackQuery: { } callbackQuery }           => BotOnCallbackQueryReceived(callbackQuery, cancellationToken),
+            // { InlineQuery: { } inlineQuery }               => BotOnInlineQueryReceived(inlineQuery, cancellationToken),
+            // { ChosenInlineResult: { } chosenInlineResult } => BotOnChosenInlineResultReceived(chosenInlineResult, cancellationToken),
             _                                              => UnknownUpdateHandlerAsync(update, cancellationToken)
         };
 
@@ -60,7 +60,7 @@ public class UpdateHandler : IUpdateHandler
 
         if (action is null) return;
         Message sentMessage = await action;
-        _logger.LogInformation("The message was sent with id: {SentMessageId}", sentMessage.MessageId);
+        _logger.LogInformation("Message sent with id: {SentMessageId}", sentMessage.MessageId);
 
 
         static async Task<Message> Bear(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
@@ -87,6 +87,7 @@ public class UpdateHandler : IUpdateHandler
 #pragma warning restore RCS1163
     }
 
+/*
     private async Task BotOnCallbackQueryReceived(CallbackQuery callbackQuery, CancellationToken cancellationToken)
     {
         _logger.LogInformation("Received inline keyboard callback from: {CallbackQueryId}", callbackQuery.Id);
@@ -101,19 +102,18 @@ public class UpdateHandler : IUpdateHandler
             text: $"Received {callbackQuery.Data}",
             cancellationToken: cancellationToken);
     }
+*/
 
+/*
     #region Inline Mode
+
 
     private async Task BotOnInlineQueryReceived(InlineQuery inlineQuery, CancellationToken cancellationToken)
     {
         _logger.LogInformation("Received inline query from: {InlineQueryFromId}", inlineQuery.From.Id);
 
         InlineQueryResult[] results = {
-            // displayed result
-            new InlineQueryResultArticle(
-                id: "1",
-                title: "TgBots",
-                inputMessageContent: new InputTextMessageContent("hello"))
+            new InlineQueryResultArticle()
         };
 
         await _botClient.AnswerInlineQueryAsync(
@@ -135,12 +135,13 @@ public class UpdateHandler : IUpdateHandler
     }
 
     #endregion
+*/
 
-#pragma warning disable IDE0060 // Remove unused parameter
-#pragma warning disable RCS1163 // Unused parameter.
+#pragma warning disable IDE0060
+#pragma warning disable RCS1163
     private Task UnknownUpdateHandlerAsync(Update update, CancellationToken cancellationToken)
-#pragma warning restore RCS1163 // Unused parameter.
-#pragma warning restore IDE0060 // Remove unused parameter
+#pragma warning restore RCS1163
+#pragma warning restore IDE0060
     {
         _logger.LogInformation("Unknown update type: {UpdateType}", update.Type);
         return Task.CompletedTask;
@@ -156,7 +157,6 @@ public class UpdateHandler : IUpdateHandler
 
         _logger.LogInformation("HandleError: {ErrorMessage}", ErrorMessage);
 
-        // Cooldown in case of network connection error
         if (exception is RequestException)
             await Task.Delay(TimeSpan.FromSeconds(2), cancellationToken);
     }
