@@ -2,7 +2,7 @@
 using Telegram.Bot.Polling;
 using Telegram.Bot.Types.Enums;
 
-namespace Telegram.Bot.Abstract;
+namespace Telegram.Bot.Template.Abstract;
 
 public abstract class ReceiverServiceBase<TUpdateHandler> : IReceiverService
     where TUpdateHandler : IUpdateHandler

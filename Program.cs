@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Telegram.Bot;
-using Telegram.Bot.Services;
+using Telegram.Bot.Template.Services;
 
 
 IHost host = Host.CreateDefaultBuilder(args)

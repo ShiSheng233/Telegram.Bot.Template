@@ -5,7 +5,7 @@ using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
 using Telegram.Bot.Types.InlineQueryResults;
 
-namespace Telegram.Bot.Services;
+namespace Telegram.Bot.Template.Services;
 
 public class UpdateHandler : IUpdateHandler
 {
