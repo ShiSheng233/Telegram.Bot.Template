@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using Telegram.Bot;
 using Telegram.Bot.Template.Abstract;
 
 namespace Telegram.Bot.Template.Services;
